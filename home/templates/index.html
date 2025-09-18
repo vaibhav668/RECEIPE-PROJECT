@@ -1,0 +1,53 @@
+{% extends "base.html"%}
+{% block start %}
+    <h1 style="color:red;">This template is return by django server</h1>
+    {{peoples}}
+<a href="/contact/">
+  contact
+</a>
+<a href="/about/">
+  about
+</a>
+
+    <table>
+  <tr>
+    <th>S.no</th>
+    <th>name</th>
+    <th>age</th>
+  </tr>
+  {% for people in peoples %}
+  <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ people.name }}</td>
+    <td>{{ people.age }}</td>
+    <td style="color:red">
+        {% if people.age >= 18 %}
+        jo
+        {% else %}
+        yo
+        {% endif %}
+    </td>
+  </tr>
+   {% endfor%}
+  <tr>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+</table>
+
+<p>
+  {% for vegie in vegies %}
+  {% if "cucumber" in vegie %}
+  cucumber is present
+  {% elif "carrot" in vegie %}
+  carrot is present
+  {% else %}
+  cucumber is not present
+  
+{% endif %}
+  {% endfor %}
+
+</p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Distinctio sequi incidunt ratione quasi numquam magni blanditiis facilis tenetur eveniet eos praesentium cupiditate quaerat, accusantium modi optio commodi laborum obcaecati corrupti.</p>
+{% endblock %}

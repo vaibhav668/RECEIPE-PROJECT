@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block start %}
+<style>
+/* Add your previous CSS or keep updated modern styling */
+body { background: LightBlue; font-family: "Segoe UI", sans-serif; margin:0; }
+.container { display:flex; flex-direction:column; width:90%; max-width:1000px; margin:40px auto; padding:30px; background:#fff; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.1); box-sizing:border-box; }
+input[type="text"], textarea, input[type="file"] { width:100%; padding:12px; margin:10px 0; border:1px solid #ccc; border-radius:6px; font-size:16px; box-sizing:border-box; }
+textarea { resize: vertical; min-height:80px; }
+button, .btn { display:inline-block; padding:10px 20px; font-size:16px; border:none; border-radius:6px; cursor:pointer; transition:0.2s; text-decoration:none; }
+button[type="submit"] { background:#4caf50; color:#fff; margin-top:8px; }
+button:hover, .btn:hover { opacity:0.9; transform: scale(1.02); }
+.btn-danger { background:#e74c3c; color:#fff; }
+.btn-update { background:#2ecc71; color:#fff; }
+.table { width:100%; border-collapse:collapse; margin-top:30px; font-size:16px; }
+.table th, .table td { padding:12px 15px; border-bottom:1px solid #ddd; text-align:left; }
+.table th { background:#f3f3f3; font-weight:600; }
+.table tr:hover { background:#fafafa; }
+.table img { border-radius:8px; object-fit:cover; max-width:180px; height:auto; }
+</style>
+
+<div class="container">
+  <!-- Add Recipe -->
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="receipe_name" placeholder="Recipe Name">
+    <textarea name="receipe_description" placeholder="Description"></textarea>
+    <input type="file" name="receipe_image">
+    <button type="submit">Add Recipe</button>
+  </form>
+
+  <!-- Search -->
+  <form class="mt-5">
+    <input type="text" name="search" placeholder="Search Food">
+    <button type="submit" class="btn btn-update">Search</button>
+  </form>
+
+  <!-- Recipes Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th style="color:red;">Recipe Name</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for receipe in receipes %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ receipe.receipe_name }}</td>
+        <td>{{ receipe.receipe_description }}</td>
+        <td><img src="/media/{{ receipe.receipe_image }}"></td>
+        <td>
+          <a href="/delete-receipe/{{ receipe.id }}/" style="margin-bottom:4px" class="btn btn-danger">Delete</a>
+          <a href="/update-receipe/{{ receipe.id }}/" class="btn btn-update">Update</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
